@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+  <title>Lägg till kurser</title>
+</head>
+
+<body>
+  <header id="header">
+    <ul>
+      <li><a href="/">Startsidan</a></li>
+      <li><a href="/about">Om webbplatsen</a></li>
+    </ul>
+  </header>
+  <main id="addcourseMain">
+    <section id="coursesForm">
+      <h1>Lägg till kurs</h1>
+      <h2>Använd formuläret nedan för att lägga till kurser i ditt CV.</h2>
+      <div id="errorsDiv"> 
+              <% if(errors.length > 0) { %>
+        <ul>
+          <% errors.forEach(error => { %>
+          <li>
+            <%= error %>
+          </li>
+          <% }); %>
+        </ul>
+        <% } %>
+      </div>
+      <form method="post">
+        <label for="cCode">Kurskod:</label>
+        <input type="text" id="cCode" name="cCode" placeholder="t.ex DT211G" value=" <%= cCode %>">
+        <label for="cName">Kursnamn:</label>
+        <input type="text" id="cName" name="cName" value="<%= cName %>">
+        <label for="cPlan">Kursplan (länk):</label>
+        <input type="text" id="cPlan" name="cPlan" value="<%= cPlan %>">
+        <label for="cProg">Progression:</label>
+        <select name="cProg" id="cProg">
+          <option value="A">A</option>
+          <option value="B">B</option>
+        </select>
+        <label for="cStatus">Status:</label>
+        <select name="cStatus" id="cStatus">
+          <option value="ongoing">Pågående</option>
+          <option value="finished">Avslutad</option>
+        </select>
+        <input type="submit" value="Spara">
+      </form>
+    </section>
+  </main>
+</body>
+
+</html>

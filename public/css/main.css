@@ -1,0 +1,92 @@
+body {
+    font-family: "Quicksand", sans-serif;
+    background-color: #98baba;
+    color: #242424;
+}
+
+#header {
+    width: 100%;
+    border-bottom: 1px solid grey;
+
+    ul {
+        display: grid;
+        grid-template-columns: auto auto;
+        list-style: none;
+        justify-items: center;
+        align-items: center;
+    }
+}
+
+#indexMain {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#courseSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#divider {
+    border-bottom: 1px solid grey;
+    width: 350px;
+}
+
+
+#addcourseMain {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+#coursesForm {
+    display: flex;
+    flex-direction: column;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        width: 100%;
+    }
+
+    input[type=text] {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    select {
+        width: 100%;
+        background-color: #575757;
+        color: #ffffff;
+        padding: 14px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #397b3b;
+        color: white;
+        padding: 14px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+
+#errorsDiv {
+    text-align: left;
+}
