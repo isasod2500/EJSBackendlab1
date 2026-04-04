@@ -1,13 +1,30 @@
 const express = require("express")
+require("dotenv").config();
+const bodyParser = require("body-parser")
+const { Client } = require("pg")
 const app = express();
 const port = 3000;
-const bodyParser = require("body-parser")
 app.set("view engine", "ejs")
 app.use(express.static("public"))
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
-const courses = [];
+//Anslut till klient
+const client = new Client({
+    port: process.env.DB_PORT,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
+
+//I fall fel finns, printa felet.
+client.connect((err) => {
+    console.log(`Fel vid anslutning: ${err}`)
+})
 
 app.get("/", (req, res) => {
     res.render("index")
@@ -24,47 +41,61 @@ app.get("/addcourse", (req, res) => {
 
 });
 
-app.post("/addcourse", (req, res) => {
+app.post("/addcourse", async (req, res) => {
     debugger;
     const errors = [];
     errors.length = 0;
-    let cCode = req.body.cCode;
-    let cName = req.body.cName;
-    let cPlan = req.body.cPlan;
+    //Hämtar värdet från formulär. Trimmar i fall whitespaces finns omkring
+    let cCode = req.body.cCode.trim();
+    let cName = req.body.cName.trim();
+    let cPlan = req.body.cPlan.trim();
     let cProg = req.body.cProg;
     let cStatus = req.body.cStatus
-    if (cCode == "") {
-        errors.push(`Du måste fylla i kurskod.`)
+
+    try {
+        console.log(cCode, cName, cPlan, cProg, cStatus)
+        //If-satser för att validera innehåll innan det skickas som query.
+        if (cCode == "") {
+            errors.push(`Du måste fylla i kurskod.`)
+        }
+
+        if (cName == "") {
+            errors.push(`Du måste fylla i kursnamn.`)
+        }
+
+        if (cPlan == "") {
+            errors.push(`Du måste ange fullständig länk för kursplanen.`)
+        }
+
+        //Lätt validerare för länk. I fall kurskoden inte finns i kursplanlänken nekas fältet.
+        if (!cPlan.includes(cCode)) {
+            errors.push(`Felaktig länk till kurs`)
+        }
+
+        //En validerare för unika entries för kurskoden.
+        let result = await client.query(`SELECT * FROM courses WHERE coursecode LIKE $1`, [cCode]);
+        if (result.rows.length > 0) {
+            errors.push(`Kurskoden du angett har redan lagts till - ange ett unikt`)
+        }
+
+        if (errors.length > 0) {
+            res.render("addcourse", {
+                errors: errors,
+                cCode: cCode,
+                cName: cName,
+                cPlan: cPlan,
+            })
+        }
+        if (errors.length == 0) {
+            await client.query(`INSERT INTO courses(coursecode,coursename,coursesyllabus,courseprogression,coursestatus)VALUES($1, $2, $3, $4, $5)`, [cCode, cName, cPlan, cProg, cStatus]);
+            res.redirect("/");
+        }
+    } catch (err) {
+        console.log(err)
     }
 
-    if (cName == "") {
-        errors.push(`Du måste fylla i kursnamn.`)
-    }
 
-    if (cPlan == "") {
-        errors.push(`Du måste ange fullständig länk för kursplanen.`)
-    }
-
-    if (errors.length > 0) {
-        res.render("addcourse", {
-            errors: errors,
-            cCode: cCode,
-            cName: cName,
-            cPlan: cPlan,
-        })
-        console.log(errors)
-
-    } else {
-        courses.push(req.body)
-        console.log(courses)
-        res.render("index", {
-            courses,
-            errors: errors,
-        })
-    }
-
-
-})
+});
 
 app.get("/about", (req, res) => {
     res.render("about")
