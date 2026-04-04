@@ -26,8 +26,13 @@ client.connect((err) => {
     console.log(`Fel vid anslutning: ${err}`)
 })
 
-app.get("/", (req, res) => {
-    res.render("index")
+app.get("/", async (req, res) => {
+    try {
+        const result = await client.query(`SELECT * FROM courses`);
+        res.render("index", {courses: result.rows})
+    } catch (err) {
+        console.error(err)
+    }
 });
 
 app.get("/addcourse", (req, res) => {
@@ -49,8 +54,8 @@ app.post("/addcourse", async (req, res) => {
     let cCode = req.body.cCode.trim();
     let cName = req.body.cName.trim();
     let cPlan = req.body.cPlan.trim();
-    let cProg = req.body.cProg;
-    let cStatus = req.body.cStatus
+    let cProg = req.body.cProg.trim();
+    let cStatus = req.body.cStatus.trim();
 
     try {
         console.log(cCode, cName, cPlan, cProg, cStatus)

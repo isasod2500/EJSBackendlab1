@@ -1,33 +1,56 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
-    <title>Kurser</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+  <title>Kurser</title>
 </head>
+
 <body>
-    <header id="header">
-        <ul>
-            <li><a href="/addcourse">Lägg till kurs</a></li>
-            <li><a href="/about">Om webbplatsen</a></li>
-        </ul>
-    </header>
+  <header id="header">
+    <ul>
+      <li><a href="/addcourse">Lägg till kurs</a></li>
+      <li><a href="/about">Om webbplatsen</a></li>
+    </ul>
+  </header>
 
-<main id="indexMain">
+  <main id="indexMain">
     <section id="courseSection">
-        <h1>Pågående kurser</h1>
-        <div id="currentCourses">
+      <h1>Pågående kurser</h1>
+      <div id="currentCourses">
+        <% courses.forEach(course => { %>
+        <% if(course.coursestatus && course.coursestatus.trim() === "Aktiv") { %>
+        <article>
+          Kurskod: <%= course.coursecode %>,
+          Kursnamn: <%= course.coursename %>,
+          Kurslänk: <%= course.coursesyllabus %>,
+          Progression: <%= course.courseprogression %>,
+          Status: <%= course.coursestatus %>
+        </article>
+        <% } %>
+        <% }) %>
+      </div>
 
-        </div>
-
-        <h2>Avklarade kurser</h2>
-        <div id=finishedCourses>
-
-        </div>
+      <h2>Avklarade kurser</h2>
+      <div id="finishedCourses">
+        <% courses.forEach(course => { %>
+        <% if(course.coursestatus && course.coursestatus.trim() === "Avslutad") { %>
+        <article>
+          Kurskod: <%= course.coursecode %>,
+          Kursnamn: <%= course.coursename %>,
+          Kurslänk: <%= course.coursesyllabus %>,
+          Progression: <%= course.courseprogression %>,
+          Status: <%= course.coursestatus %>
+        </article>
+        <% } %>
+        <% }) %>
+      </div>
     </section>
-</main>
-    
+  </main>
+
 </body>
+
 </html>
