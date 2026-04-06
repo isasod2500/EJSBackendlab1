@@ -23,13 +23,22 @@
       <div id="currentCourses">
         <% courses.forEach(course => { %>
         <% if(course.coursestatus && course.coursestatus.trim() === "Aktiv") { %>
-        <article>
-          Kurskod: <%= course.coursecode %>,
-          Kursnamn: <%= course.coursename %>,
-          Kurslänk: <%= course.coursesyllabus %>,
-          Progression: <%= course.courseprogression %>,
-          Status: <%= course.coursestatus %>
+        <article class="course">
+          <h3>
+            <%= course.coursecode %>, <%= course.coursename %>
+          </h3>
+          <p>
+            Progression: <%= course.courseprogression %>
+          </p>
+          <p>
+            <a href="<%= course.coursesyllabus %>">Länk till kursplan</a>
+          </p>
+          <a href="/delete/<%= course.coursecode %>" class="deleteCourse">Ta bort kurs</a>
+          <div id="divider">
+
+          </div>
         </article>
+
         <% } %>
         <% }) %>
       </div>
@@ -38,12 +47,20 @@
       <div id="finishedCourses">
         <% courses.forEach(course => { %>
         <% if(course.coursestatus && course.coursestatus.trim() === "Avslutad") { %>
-        <article>
-          Kurskod: <%= course.coursecode %>,
-          Kursnamn: <%= course.coursename %>,
-          Kurslänk: <%= course.coursesyllabus %>,
-          Progression: <%= course.courseprogression %>,
-          Status: <%= course.coursestatus %>
+        <article class="course">
+          <h3>
+            <%= course.coursecode %>, <%= course.coursename %>
+          </h3>
+          <p>
+            Progression: <%= course.courseprogression %>
+          </p>
+          <p>
+            <a href="<%= course.coursesyllabus %>">Länk till kursplan</a>
+          </p>
+          <a href="/delete/<%= course.coursecode %>" class="deleteCourse">Ta bort kurs</a>
+          <div id="divider">
+
+          </div>
         </article>
         <% } %>
         <% }) %>

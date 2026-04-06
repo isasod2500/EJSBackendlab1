@@ -29,9 +29,9 @@ client.connect((err) => {
 app.get("/", async (req, res) => {
     try {
         const result = await client.query(`SELECT * FROM courses`);
-        res.render("index", {courses: result.rows})
+        res.render("index", { courses: result.rows })
     } catch (err) {
-        console.error(err)
+        console.log(err)
     }
 });
 
@@ -46,19 +46,19 @@ app.get("/addcourse", (req, res) => {
 
 });
 
+
 app.post("/addcourse", async (req, res) => {
     debugger;
     const errors = [];
     errors.length = 0;
     //Hämtar värdet från formulär. Trimmar i fall whitespaces finns omkring
-    let cCode = req.body.cCode.trim();
+    let cCode = req.body.cCode.trim().toUpperCase();
     let cName = req.body.cName.trim();
-    let cPlan = req.body.cPlan.trim();
+    let cPlan = req.body.cPlan.trim().toUpperCase();
     let cProg = req.body.cProg.trim();
     let cStatus = req.body.cStatus.trim();
 
     try {
-        console.log(cCode, cName, cPlan, cProg, cStatus)
         //If-satser för att validera innehåll innan det skickas som query.
         if (cCode == "") {
             errors.push(`Du måste fylla i kurskod.`)
@@ -102,10 +102,25 @@ app.post("/addcourse", async (req, res) => {
 
 });
 
+app.get("/delete/:cCode", async (req, res) => {
+    debugger;
+    let cCode = req.params.cCode
+    try {
+        client.query(`DELETE FROM courses WHERE coursecode=$1;`, [cCode], (err) => {
+            if (err) {
+                console.log(`${err}`)
+            }
+        })
+        res.redirect("/");
+    } catch (err) {
+        console.log(err)
+    }
+});
+
 app.get("/about", (req, res) => {
     res.render("about")
 });
 
 app.listen(port, () => {
     console.log("Applikation ansluten till " + port)
-})
+});
