@@ -15,6 +15,21 @@ body {
         justify-items: center;
         align-items: center;
     }
+
+    a {
+        text-decoration: none;
+    color: #242424;
+    background: #f9f969;
+    border: 1px solid;
+  box-shadow: 5px 10px 18px #888888;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    }
+    a:hover {
+        text-decoration: underline;
+        background: #d8d859
+    }
 }
 
 #indexMain {
@@ -45,6 +60,20 @@ body {
     align-items: center;
 }
 
+.editCourse {
+     text-decoration: none;
+    color: #242424;
+    background: #f9f969;
+    border: 1px solid;
+  box-shadow: 5px 10px 18px #888888;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.editCourse:hover {
+    text-decoration: underline;
+}
 .deleteCourse {
     text-decoration: none;
     color: #242424;
@@ -120,4 +149,20 @@ body {
 
 #errorsDiv {
     text-align: left;
+}
+
+#aboutMain {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+
+    article {
+        text-align: left;
+        max-width: 65ch;
+    }
+
+    h3 {
+        text-align: center;
+    }
 }
