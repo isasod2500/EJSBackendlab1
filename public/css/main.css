@@ -28,11 +28,42 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    h3 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0.5rem;
+    }
+}
+
+.course {
+        display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.deleteCourse {
+    text-decoration: none;
+    color: #242424;
+    background: #DB9FA2;
+    border: 1px solid;
+  box-shadow: 5px 10px 18px #888888;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.deleteCourse:hover {
+    text-decoration: underline;
 }
 
 #divider {
     border-bottom: 1px solid grey;
     width: 350px;
+    margin: 1rem 0 1rem 0;
 }
 
 
