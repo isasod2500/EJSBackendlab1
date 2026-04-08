@@ -23,8 +23,12 @@ const client = new Client({
 
 //I fall fel finns, printa felet.
 client.connect((err) => {
-    console.log(`Fel vid anslutning: ${err}`)
-})
+    if (err) {
+        console.log("DB error:", err);
+    } else {
+        console.log("Databasen ansluten");
+    }
+});
 
 app.get("/", async (req, res) => {
     try {
@@ -131,6 +135,4 @@ app.get("/about", (req, res) => {
     res.render("about")
 });
 
-app.listen(process.env.DB_PORT, () => {
-    console.log("Applikation ansluten till " + port)
-});
+app.listen(port, "0.0.0.0");
