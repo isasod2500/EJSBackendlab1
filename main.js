@@ -131,6 +131,6 @@ app.get("/about", (req, res) => {
     res.render("about")
 });
 
-app.listen(port, () => {
+app.listen(process.env.DB_PORT, () => {
     console.log("Applikation ansluten till " + port)
 });
