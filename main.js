@@ -48,7 +48,6 @@ app.get("/addcourse", (req, res) => {
 
 
 app.post("/addcourse", async (req, res) => {
-    debugger;
     const errors = [];
     errors.length = 0;
     //Hämtar värdet från formulär. Trimmar i fall whitespaces finns omkring
@@ -117,10 +116,21 @@ app.get("/delete/:cCode", async (req, res) => {
     }
 });
 
+app.get("/edit", async (req, res) => {
+    debugger;
+    let cCode = req.params.cCode
+    res.render("edit", {
+        errors: [],
+        cCode: "",
+        cName: "",
+        cPlan: "",
+    })
+})
+
 app.get("/about", (req, res) => {
     res.render("about")
 });
 
-app.listen(port, () => {
+app.listen(process.env.DB_PORT, () => {
     console.log("Applikation ansluten till " + port)
 });
